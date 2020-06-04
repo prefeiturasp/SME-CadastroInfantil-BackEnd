@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "cadastro_infantil.users.apps.UsersConfig",
     "cadastro_infantil.apps.hello_app",
+    "cadastro_infantil.apps.formulario",
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

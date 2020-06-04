@@ -332,3 +332,5 @@ cadastro_infantil/media/
 .envs/*
 !.envs/.local/
 !.envs/.production_example/
+
+.idea/
