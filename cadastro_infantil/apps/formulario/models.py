@@ -5,13 +5,13 @@ from cadastro_infantil.utils.image_compressor import compress
 
 class DadosCrianca(models.Model):
     SEXO = [
-        "F", "FEMININO",
-        "M", "MASCULINO"
+        ("F", "FEMININO"),
+        ("M", "MASCULINO")
     ]
     TIPO_RESPONSAVEL = [
-        'P', 'PAI',
-        'M', 'MAE',
-        'O', 'OUTRO'
+        ('P', 'PAI'),
+        ('M', 'MAE'),
+        ('O', 'OUTRO')
     ]
 
     nome_crianca = models.CharField(max_length=255, help_text="Nome da criança")

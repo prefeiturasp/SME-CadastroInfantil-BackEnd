@@ -5,6 +5,8 @@ from cadastro_infantil.apps.formulario.models import DadosCrianca
 
 
 class DadosCriancaCreateSerializer(serializers.ModelSerializer):
+    sexo_crianca = serializers.ChoiceField(choices=DadosCrianca.SEXO)
+    tipo_responsavel = serializers.ChoiceField(choices=DadosCrianca.TIPO_RESPONSAVEL)
     certidao_crianca = HybridImageField(required=True)
 
     class Meta:
