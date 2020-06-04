@@ -13,7 +13,6 @@ class DadosCrianca(models.Model):
         ('M', 'MAE'),
         ('O', 'OUTRO')
     ]
-
     nome_crianca = models.CharField(max_length=255, help_text="Nome da criança")
     sexo_crianca = models.CharField(max_length=1, help_text="Sexo da criança (M/F)")
     dt_nasc_crianca = models.DateField(help_text="Data de nascimento da criança")
@@ -29,6 +28,10 @@ class DadosCrianca(models.Model):
     dt_nasc_responsavel = models.DateField(help_text="Data de nascimento do responsavel")
     email_responsavel = models.EmailField(help_text="Email do responsavel")
     certidao_crianca = models.ImageField(help_text="Foto da certidão de nascimento em BASE64")
+
+    CAMPOS_PRA_NORMALIZAR = ['nome_crianca', 'sexo_crianca', 'endereco_moradia', 'numero_moradia',
+                             'complemento_moradia', 'nome_mae', 'nome_pai', 'tipo_responsavel', 'nome_responsavel',
+                             'email_responsavel']
 
     def save(self, *args, **kwargs):
         if not self.pk:
