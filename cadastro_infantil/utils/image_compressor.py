@@ -1,6 +1,7 @@
 from io import BytesIO
 from PIL import Image, UnidentifiedImageError
 from django.core.files import File
+import uuid
 
 
 def compress(image):
@@ -8,7 +9,7 @@ def compress(image):
         im = reorient_image(Image.open(image))
         im_io = BytesIO()
         im.save(im_io, 'JPEG', quality=70)
-        new_image = File(im_io, name=image.name)
+        new_image = File(im_io, name=f"{str(uuid.uuid4())}.jpeg")
         return new_image
     except UnidentifiedImageError:
         return image

@@ -7,6 +7,9 @@ from cadastro_infantil.utils.remove_acentos import remover_acentos
 
 class DadosCriancaCreateSerializer(serializers.ModelSerializer):
     sexo_crianca = serializers.ChoiceField(choices=DadosCrianca.SEXO)
+    filiacao1_sexo = serializers.ChoiceField(choices=DadosCrianca.SEXO)
+    filiacao2_sexo = serializers.ChoiceField(choices=DadosCrianca.SEXO)
+    raca_cor_crianca = serializers.ChoiceField(choices=DadosCrianca.RACA_COR)
     tipo_responsavel = serializers.ChoiceField(choices=DadosCrianca.TIPO_RESPONSAVEL)
     certidao_crianca = HybridImageField(required=True)
 
@@ -14,22 +17,36 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
         model = DadosCrianca
         fields = ('nome_crianca',
                   'sexo_crianca',
+                  'nacionalidade_crianca',
+                  'dt_entrada_brasil',
                   'dt_nasc_crianca',
+                  'uf_nasc_crianca',
+                  'municipio_nasc_crianca',
+                  'raca_cor_crianca',
+                  'tem_nee',
+                  'tipo_nee',
+                  'filiacao1_nome',
+                  'filiacao1_falecido',
+                  'filiacao1_sexo',
+                  'filiacao1_nacionalidade',
+                  'filiacao2_consta',
+                  'filiacao2_nome',
+                  'filiacao2_falecido',
+                  'filiacao2_sexo',
+                  'filiacao2_nacionalidade',
                   'cep_moradia',
                   'endereco_moradia',
                   'numero_moradia',
                   'complemento_moradia',
-                  'nome_mae',
-                  'nome_pai',
                   'tipo_responsavel',
                   'nome_responsavel',
                   'cpf_responsavel',
                   'dt_nasc_responsavel',
                   'email_responsavel',
+                  'telefone_responsavel',
                   'certidao_crianca')
 
     def validate_certidao_crianca(self, value):
-        print('CERTIDAO')
         if not value:
             raise serializers.ValidationError("Certidão deve ser enviado")
         return value

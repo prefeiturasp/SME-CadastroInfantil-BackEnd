@@ -9,7 +9,7 @@ else:
     router = SimpleRouter()
 
 # router.register("users", UserViewSet)
-router.register("cadastro", CreateDadosCriancaViewSet)
+router.register("test-cadastro", CreateDadosCriancaViewSet)
 
 
 app_name = "api"

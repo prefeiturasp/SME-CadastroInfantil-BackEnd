@@ -323,7 +323,7 @@ tags
 ### Project template
 
 cadastro_infantil/media/
-
+media/
 .pytest_cache/
 
 
