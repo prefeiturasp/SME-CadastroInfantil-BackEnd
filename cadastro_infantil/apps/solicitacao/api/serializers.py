@@ -1,8 +1,8 @@
+from django.utils.timezone import now
 from rest_framework import serializers
 
 from cadastro_infantil.apps.formulario.api.serializers import DadosCriancaCreateSerializer
 from cadastro_infantil.apps.solicitacao.models import Solicitacao
-from django.utils.timezone import now
 
 
 class SolicitacaoCreateSerializer(serializers.ModelSerializer):
@@ -20,4 +20,7 @@ class SolicitacaoCreateSerializer(serializers.ModelSerializer):
         dados = dados_serializer.create(dados_data)
         validated_data['dados_id'] = dados.pk
         validated_data['protocolo'] = f"{now().strftime('%y%m')}{dados.pk}"
-        return super().create(validated_data)
+        solicitacao = super().create(validated_data)
+        # if solicitacao.protocolo:
+        #     envia_confirmacao_cadastro.delay(para=dados.email_responsavel, protocolo=solicitacao.protocolo)
+        return solicitacao

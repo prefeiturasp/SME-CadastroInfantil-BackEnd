@@ -11,7 +11,7 @@ from cadastro_infantil.apps.hello_app.views import HelloWorldView
 urlpatterns = [
                   # Django Admin, use {% url 'admin:index' %}
                   path(settings.ADMIN_URL, admin.site.urls),
-                  path("hello/", HelloWorldView.as_view(), name='hello'),
+                  path("", HelloWorldView.as_view(), name='home'),
                   # User management
                   # path("users/", include("cadastro_infantil.users.urls", namespace="users")),
                   # path("accounts/", include("allauth.urls")),
@@ -24,7 +24,7 @@ if settings.DEBUG:
 # API URLS
 urlpatterns += [
     # API base url
-    path("", include("config.api_router")),
+    path("v1/", include("config.api_router")),
     # DRF auth token
     path("auth-token/", obtain_auth_token),
 ]

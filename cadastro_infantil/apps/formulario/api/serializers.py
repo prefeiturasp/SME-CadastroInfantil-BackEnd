@@ -39,6 +39,7 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
                   'numero_moradia',
                   'complemento_moradia',
                   'tipo_responsavel',
+                  'parentesco_responsavel',
                   'nome_responsavel',
                   'cpf_responsavel',
                   'dt_nasc_responsavel',

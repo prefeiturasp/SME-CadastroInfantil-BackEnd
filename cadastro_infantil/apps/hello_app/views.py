@@ -7,4 +7,4 @@ class HelloWorldView(views.APIView):
         """
         Return a simple hello msg
         """
-        return Response({'data': 'Hello World!'})
+        return Response({'data': 'api cadastro infantil v1'})

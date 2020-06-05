@@ -56,6 +56,7 @@ class DadosCrianca(models.Model):
 
     # Responsavel
     tipo_responsavel = models.CharField(max_length=1, help_text="Tipo de responsavel da crianca")
+    parentesco_responsavel = models.CharField(max_length=50, help_text="Grau de parentesco", blank=True)
     nome_responsavel = models.CharField(max_length=255, blank=True, help_text="Nome do responsavel da criança")
     cpf_responsavel = models.CharField(max_length=11, help_text="CPF do responsavel")
     dt_nasc_responsavel = models.DateField(help_text="Data de nascimento do responsavel")
@@ -80,6 +81,7 @@ class DadosCrianca(models.Model):
                              'endereco_moradia',
                              'numero_moradia',
                              'complemento_moradia',
+                             'parentesco_responsavel',
                              'nome_responsavel',
                              'email_responsavel']
 
