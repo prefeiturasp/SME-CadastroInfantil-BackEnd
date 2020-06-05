@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from cadastro_infantil.apps.solicitacao.models import Solicitacao
+
+admin.site.register(Solicitacao)
