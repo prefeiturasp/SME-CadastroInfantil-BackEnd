@@ -7,6 +7,8 @@ import uuid
 def compress(image):
     try:
         im = reorient_image(Image.open(image))
+        if im.mode in ("RGBA", "P"):
+            im = im.convert("RGB")
         im_io = BytesIO()
         im.save(im_io, 'JPEG', quality=70)
         new_image = File(im_io, name=f"{str(uuid.uuid4())}.jpeg")

@@ -53,6 +53,9 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, attrs):
-        for campo in DadosCrianca.CAMPOS_PRA_NORMALIZAR:
-            attrs[campo] = remover_acentos(str(attrs[campo]).upper())
+        try:
+            for campo in DadosCrianca.CAMPOS_PRA_NORMALIZAR:
+                attrs[campo] = remover_acentos(str(attrs[campo]).upper())
+        except KeyError as e:
+            raise serializers.ValidationError(f"{e} deve ser enviado")
         return attrs
