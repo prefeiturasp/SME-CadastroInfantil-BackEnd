@@ -93,3 +93,5 @@ class DadosCrianca(models.Model):
 
     class Meta:
         db_table = 'CI_dados_crianca'
+
+

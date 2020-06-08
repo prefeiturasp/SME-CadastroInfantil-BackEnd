@@ -13,3 +13,21 @@ class Solicitacao(models.Model):
 
     class Meta:
         db_table = 'CI_solicitacao'
+        verbose_name = 'Solicitação'
+        verbose_name_plural = 'Solicitações'
+
+    def __str__(self):
+        return f'Solicitação nr: {self.protocolo}'
+
+    def nascimento_crianca(self):
+        return self.dados.dt_nasc_crianca.strftime('%d/%m/%Y')
+
+    nascimento_crianca.short_description = 'Data Nasc. Criança'
+
+    def cep_moradia(self):
+        return f"{self.dados.cep_moradia[0:-3]}-{self.dados.cep_moradia[-3:]}"
+
+    cep_moradia.short_description = 'CEP'
+
+    def endereco_completo(self):
+        return f"{self.dados.endereco_moradia}, {self.dados.numero_moradia}, {self.dados.complemento_moradia}"
