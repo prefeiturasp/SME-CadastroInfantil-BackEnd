@@ -1,0 +1,16 @@
+{% extends "email_base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-12 p-2">
+            <p>Caro Responsavel,</p>
+
+            <p>
+                <strong> Pré-inscrição efetuada com sucesso, aguarde informação do número do protocolo para
+                    acompanhamento do cadastro</strong>
+            </p>
+            <p>
+                Número de solicitação <em>{{ solicitacao.protocolo }}</em>.
+            </p>
+        </div>
+    </div>
+{% endblock %}

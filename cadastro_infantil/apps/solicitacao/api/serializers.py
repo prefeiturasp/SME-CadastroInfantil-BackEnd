@@ -1,8 +1,10 @@
-from django.utils.timezone import now
+from allauth.utils import serialize_instance
 from rest_framework import serializers
 
 from cadastro_infantil.apps.formulario.api.serializers import DadosCriancaCreateSerializer
 from cadastro_infantil.apps.solicitacao.models import Solicitacao
+from cadastro_infantil.apps.solicitacao.tasks import envia_confirmacao_cadastro
+from cadastro_infantil.utils.gerador_de_protocolo import gerador_de_protocolo
 
 
 class SolicitacaoCreateSerializer(serializers.ModelSerializer):
@@ -12,15 +14,28 @@ class SolicitacaoCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solicitacao
         fields = ('dados', 'protocolo')
-        # read_only_fields = ('protocolo',)
 
     def create(self, validated_data):
+        # Extraindo os dados da criança e salvando via serializer
         dados_data = validated_data.pop('dados')
         dados_serializer = self.fields['dados']
         dados = dados_serializer.create(dados_data)
+
+        # Relacionando os dados criados com a solicitacao
         validated_data['dados_id'] = dados.pk
-        validated_data['protocolo'] = f"{now().strftime('%y%m')}{dados.pk}"
+
+        # Criando o protocolo da solicitacao
+        validated_data['protocolo'] = gerador_de_protocolo(dados.pk)
+
+        # Criando e obtendo a solicitacao
         solicitacao = super().create(validated_data)
-        # if solicitacao.protocolo:
-        #     envia_confirmacao_cadastro.delay(para=dados.email_responsavel, protocolo=solicitacao.protocolo)
+
+        # email
+        if solicitacao.protocolo and len(dados.email_responsavel) > 1:
+            contexto = {
+                'para': dados.email_responsavel,
+                'solicitacao': serialize_instance(solicitacao),
+                'dados': serialize_instance(dados)
+            }
+            envia_confirmacao_cadastro.delay(**contexto)
         return solicitacao

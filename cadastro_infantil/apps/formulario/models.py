@@ -60,8 +60,9 @@ class DadosCrianca(models.Model):
     nome_responsavel = models.CharField(max_length=255, blank=True, help_text="Nome do responsavel da criança")
     cpf_responsavel = models.CharField(max_length=11, help_text="CPF do responsavel")
     dt_nasc_responsavel = models.DateField(help_text="Data de nascimento do responsavel")
-    email_responsavel = models.EmailField(help_text="Email do responsavel")
+    email_responsavel = models.EmailField(help_text="Email do responsavel", blank=True)
     telefone_responsavel = models.CharField(max_length=14, help_text="Telefone do responsavel")
+    telefone_opcional = models.CharField(max_length=14, help_text="Telefone 2 do responsavel", blank=True)
 
     # Documento
     certidao_crianca = models.ImageField(help_text="Foto da certidão de nascimento em BASE64")
