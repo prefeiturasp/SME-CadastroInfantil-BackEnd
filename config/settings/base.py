@@ -89,6 +89,7 @@ LOCAL_APPS = [
     "cadastro_infantil.apps.hello_app",
     "cadastro_infantil.apps.formulario",
     "cadastro_infantil.apps.solicitacao",
+    "cadastro_infantil.apps.dres",
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -169,7 +170,7 @@ STATICFILES_FINDERS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(ROOT_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = "/media/"
+MEDIA_URL = env('DJANGO_MEDIA_URL', default="/media/")
 
 # TEMPLATES
 # ------------------------------------------------------------------------------

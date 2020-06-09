@@ -6,10 +6,10 @@ from cadastro_infantil.apps.solicitacao.models import Solicitacao
 class SolicitacaoAdmin(admin.ModelAdmin):
     list_display = (
         'get_nr_solicitacao', 'get_crianca_nome', 'nascimento_crianca', 'endereco_completo', 'cep_moradia', 'dre',
-        'dt_solicitacao', 'exportado')
+        'distrito',  'exportado')
     list_filter = ('exportado', 'dre')
     list_per_page = 25
-    # list_editable = ('dre',)
+    list_editable = ('dre',)
     readonly_fields = ('dados',)
 
     list_select_related = ['dados', ]
