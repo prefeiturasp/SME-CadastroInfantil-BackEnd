@@ -47,3 +47,11 @@ class Solicitacao(models.Model):
 
     def endereco_completo(self):
         return f"{self.dados.endereco_moradia}, {self.dados.numero_moradia}, {self.dados.complemento_moradia}"
+
+    @staticmethod
+    def get_datetime_cols():
+        return ['dt_solicitacao', 'dt_modificacao']
+
+    @staticmethod
+    def get_date_cols():
+        return ['dados__dt_nasc_crianca', 'dados__dt_entrada_brasil', 'dados__dt_nasc_responsavel', ]
