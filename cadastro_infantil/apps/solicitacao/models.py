@@ -3,20 +3,21 @@ from django.db import models
 from cadastro_infantil.apps.formulario.models import DadosCrianca
 
 DRE_CHOICE = [
-    ("JT", "JT - JACANA-TREMEBE"),
-    ("SA", "SA - SANTO AMARO"),
-    ("PE", "PE - PENHA"),
-    ("IQ", "IQ - ITAQUERA"),
-    ("IP", "IP - IPIRANGA"),
     ("BT", "BT - BUTANTA"),
-    ("SM", "SM - SAO MATEUS"),
-    ("CS", "CS - CAPELA DO SOCORRO"),
-    ("MP", "MP - SAO MIGUEL"),
     ("CL", "CL - CAMPO LIMPO"),
+    ("CS", "CS - CAPELA DO SOCORRO"),
     ("FB", "FB - FREGUESIA-BRASILANDIA"),
+    ("G", "G - GUAIANASES"),
+    ("IP", "IP - IPIRANGA"),
+    ("IQ", "IQ - ITAQUERA"),
+    ("JT", "JT - JACANA-TREMEBE"),
+    ("MP", "MP - SAO MIGUEL"),
+    ("PE", "PE - PENHA"),
+    ("PJ", "PJ - PIRITUBA-JARAGUA"),
+    ("SA", "SA - SANTO AMARO"),
+    ("SM", "SM - SAO MATEUS"),
     ("NÃO ENCONTRADO", "NÃO ENCONTRADO")
 ]
-
 
 class Solicitacao(models.Model):
     protocolo = models.CharField(max_length=50, unique=True, help_text="Protocolo automatico")
