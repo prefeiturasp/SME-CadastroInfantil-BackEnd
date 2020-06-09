@@ -16,7 +16,7 @@ def export_all(modeladmin, request, queryset):
 
     cols = [f"dados__{f.name}" for f in DadosCrianca._meta.get_fields()] + [f.name for f in
                                                                             Solicitacao._meta.get_fields()]
-    cols = [col for col in cols if col not in ['id', 'dados__dados', 'dados__id', 'exportado']]
+    cols = [col for col in cols if col not in ['id', 'dados__dados', 'dados__id', 'dados', 'exportado']]
     solicitacoes = Solicitacao.objects.select_related('dados').values(*cols).all()
 
     wrow = 0

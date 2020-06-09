@@ -1,9 +1,11 @@
 from django.contrib import admin
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from cadastro_infantil.apps.solicitacao.models import Solicitacao
 from cadastro_infantil.utils.excel_utils import export_all
 
-export_all.short_description = 'Exportar todos'
+export_all.short_description = 'Exportar todas as solicitações'
 
 
 class SolicitacaoAdmin(admin.ModelAdmin):
@@ -13,9 +15,15 @@ class SolicitacaoAdmin(admin.ModelAdmin):
     list_filter = ('exportado', 'dre')
     list_per_page = 25
     list_editable = ('dre',)
-    readonly_fields = ('dados',)
+    # list_display_links = None
+    exclude = ('dados',)
+    readonly_fields = ('crianca_dados',)
     actions = [export_all, ]
     list_select_related = ['dados', ]
+
+    def crianca_dados(self, obj):
+        change_url = reverse('admin:formulario_dadoscrianca_change', args=(obj.dados.id,))
+        return mark_safe('<a href="%s">%s</a>' % (change_url, obj.dados))
 
     #######################################################
     def get_crianca_nome(self, obj):

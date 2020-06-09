@@ -94,4 +94,7 @@ class DadosCrianca(models.Model):
     class Meta:
         db_table = 'CI_dados_crianca'
 
+    def __str__(self):
+        return f"{self.pk} - {self.nome_crianca}"
+
 
