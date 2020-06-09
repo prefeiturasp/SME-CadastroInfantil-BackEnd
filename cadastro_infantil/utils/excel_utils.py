@@ -16,13 +16,14 @@ def export_all(modeladmin, request, queryset):
 
     cols = [f"dados__{f.name}" for f in DadosCrianca._meta.get_fields()] + [f.name for f in
                                                                             Solicitacao._meta.get_fields()]
-    cols = [col for col in cols if col not in ['id', 'dados__dados', 'dados__id', ]]
+    cols = [col for col in cols if col not in ['id', 'dados__dados', 'dados__id', 'exportado']]
     solicitacoes = Solicitacao.objects.select_related('dados').values(*cols).all()
 
     wrow = 0
-    wbook = xlsxwriter.Workbook(response, {'constant_memory': True, 'in_memory': True, 'remove_timezone': True})
+    wbook = xlsxwriter.Workbook(response, {'constant_memory': True, 'in_memory': True})
     bold = wbook.add_format({'bold': True})
     date = wbook.add_format({'num_format': 'dd/mm/yy'})
+    date_time = wbook.add_format({'num_format': 'dd/mm/yy hh:mm'})
     wsheet = wbook.add_worksheet()
 
     # Cabeçalho
@@ -37,7 +38,8 @@ def export_all(modeladmin, request, queryset):
             if k in Solicitacao.get_date_cols():
                 wsheet.write(wrow, col, v, date)
             elif k in Solicitacao.get_datetime_cols():
-                wsheet.write(wrow, col, v, date)
+                v = v.astimezone().replace(tzinfo=None)
+                wsheet.write(wrow, col, v, date_time)
             elif k == 'dados__certidao_crianca':
                 v = settings.MEDIA_URL + v
                 wsheet.write(wrow, col, v)
@@ -46,5 +48,8 @@ def export_all(modeladmin, request, queryset):
             col += 1
         wrow += 1
     wbook.close()
+
+    # Marca como exportado
+    solicitacoes.update(exportado=True)
 
     return response
