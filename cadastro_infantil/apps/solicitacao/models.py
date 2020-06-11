@@ -19,6 +19,7 @@ DRE_CHOICE = [
     ("NÃO ENCONTRADO", "NÃO ENCONTRADO")
 ]
 
+
 class Solicitacao(models.Model):
     protocolo = models.CharField(max_length=50, unique=True, help_text="Protocolo automatico")
     dados = models.OneToOneField(DadosCrianca, related_name='dados', on_delete=models.PROTECT)
@@ -56,3 +57,9 @@ class Solicitacao(models.Model):
     @staticmethod
     def get_date_cols():
         return ['dados__dt_nasc_crianca', 'dados__dt_entrada_brasil', 'dados__dt_nasc_responsavel', ]
+
+    @staticmethod
+    def get_colunas_planilha():
+        cols = [f"dados__{f.name}" for f in DadosCrianca._meta.get_fields()] + [f.name for f in
+                                                                                Solicitacao._meta.get_fields()]
+        return [col for col in cols if col not in ['id', 'dados__dados', 'dados__id', 'dados', 'exportado']]

@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from cadastro_infantil.apps.solicitacao.models import Solicitacao
-from cadastro_infantil.utils.excel_utils import export_all
+from cadastro_infantil.utils.excel_utils import export_all, export_novos_por_dre
 
 export_all.short_description = 'Exportar todas as solicitações'
+export_novos_por_dre.short_description = 'Exportar novos registros por DRE'
 
 
 class SolicitacaoAdmin(admin.ModelAdmin):
@@ -18,7 +19,7 @@ class SolicitacaoAdmin(admin.ModelAdmin):
     # list_display_links = None
     exclude = ('dados',)
     readonly_fields = ('crianca_dados',)
-    actions = [export_all, ]
+    actions = [export_novos_por_dre, export_all, ]
     list_select_related = ['dados', ]
 
     def crianca_dados(self, obj):
@@ -42,7 +43,8 @@ class SolicitacaoAdmin(admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         actions = self.get_actions(request)
         if (actions and request.method == 'POST' and 'index' in request.POST and
-                request.POST['action'].startswith('export_all')):
+                (request.POST['action'].startswith('export_all') or
+                 request.POST['action'].startswith('export_novos_por_dre'))):
             data = request.POST.copy()
             data['select_across'] = '1'
             request.POST = data
