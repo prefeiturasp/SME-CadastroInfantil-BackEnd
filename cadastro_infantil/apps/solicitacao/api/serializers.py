@@ -41,7 +41,7 @@ class SolicitacaoCreateSerializer(serializers.ModelSerializer):
             contexto = {
                 'para': dados.email_responsavel,
                 'solicitacao': serialize_instance(solicitacao),
-                'dados': serialize_instance(dados)
+                # 'dados': serialize_instance(dados)
             }
             envia_confirmacao_cadastro.delay(**contexto)
         return solicitacao
