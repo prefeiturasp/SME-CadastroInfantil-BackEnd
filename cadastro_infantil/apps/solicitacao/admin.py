@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 from cadastro_infantil.apps.solicitacao.models import Solicitacao
 from cadastro_infantil.utils.excel_utils import export_all, export_novos_por_dre
 
-export_all.short_description = 'Exportar todas as solicitações'
+export_all.short_description = 'Gerar lista com TODAS as solicitações'
 export_novos_por_dre.short_description = 'Exportar novos registros por DRE'
 
 

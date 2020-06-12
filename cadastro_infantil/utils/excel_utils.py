@@ -22,11 +22,12 @@ def gerador_de_exportacao(fname, mode):
     cols = Solicitacao.get_colunas_planilha()
     wbook = xlsxwriter.Workbook(response, {'constant_memory': True})
     if mode == 'all':
+        cols.append('exportado')
         solicitacoes = Solicitacao.objects.select_related('dados').values(*cols).all().order_by('dados_id')
         escreve_solicitacoes_planilha(cols, solicitacoes, wbook)
         wbook.close()
         # Marca como exportado
-        solicitacoes.update(exportado=True)
+        # solicitacoes.update(exportado=True)
     elif mode == 'dre':
         for sg_dre, nm_dre in DRE_CHOICE:
             solicitacoes = Solicitacao.objects.select_related('dados').values(*cols) \

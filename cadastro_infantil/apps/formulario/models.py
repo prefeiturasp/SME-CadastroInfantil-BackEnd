@@ -67,6 +67,11 @@ class DadosCrianca(models.Model):
     # Documento
     certidao_crianca = models.ImageField(help_text="Foto da certidão de nascimento em BASE64")
 
+    # Irmao na rede
+    irmao_na_rede = models.CharField(max_length=2, blank=True,
+                                     help_text="Criança tem irmao matriculado na rede municipal")
+    nome_irmao = models.CharField(max_length=255, blank=True, help_text='Nome do irmão')
+
     CAMPOS_PRA_NORMALIZAR = ['nome_crianca',
                              'sexo_crianca',
                              'nacionalidade_crianca',
@@ -84,7 +89,8 @@ class DadosCrianca(models.Model):
                              'complemento_moradia',
                              'parentesco_responsavel',
                              'nome_responsavel',
-                             'email_responsavel']
+                             'email_responsavel',
+                             'nome_irmao']
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -96,5 +102,3 @@ class DadosCrianca(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.nome_crianca}"
-
-

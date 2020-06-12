@@ -46,7 +46,10 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
                   'email_responsavel',
                   'telefone_responsavel',
                   'telefone_opcional',
-                  'certidao_crianca')
+                  'certidao_crianca',
+                  'irmao_na_rede',
+                  'nome_irmao'
+                  )
 
     def validate_certidao_crianca(self, value):
         if not value:
