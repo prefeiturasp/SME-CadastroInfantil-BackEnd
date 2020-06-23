@@ -22,6 +22,8 @@ class SolicitacaoAdmin(admin.ModelAdmin):
     actions = [export_novos_por_dre, export_all, ]
     list_select_related = ['dados', ]
 
+    search_fields = ("protocolo", "dados__nome_crianca")
+
     def crianca_dados(self, obj):
         change_url = reverse('admin:formulario_dadoscrianca_change', args=(obj.dados.id,))
         return mark_safe('<a href="%s">%s</a>' % (change_url, obj.dados))
