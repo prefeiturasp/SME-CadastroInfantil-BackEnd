@@ -11,11 +11,11 @@ export_novos_por_dre.short_description = 'Exportar novos registros por DRE'
 
 class SolicitacaoAdmin(admin.ModelAdmin):
     list_display = (
-        'get_nr_solicitacao', 'get_crianca_nome', 'nascimento_crianca', 'endereco_completo', 'cep_moradia',
-        "get_email_responsavel", 'dre', 'distrito', 'exportado', "finalizado")
+        'get_nr_solicitacao', 'get_crianca_nome', 'nascimento_crianca', 'endereco_completo',
+        'cep_moradia', "get_email_responsavel", 'dre', 'distrito', 'exportado', "finalizado")
     list_filter = ('exportado', "finalizado", 'dre')
     list_per_page = 25
-    list_editable = ('dre', "finalizado",)
+    list_editable = ('dre', "finalizado")
     # list_display_links = None
     exclude = ('dados',)
     readonly_fields = ('crianca_dados',)

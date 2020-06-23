@@ -19,6 +19,17 @@ DRE_CHOICE = [
     ("NÃO ENCONTRADO", "NÃO ENCONTRADO")
 ]
 
+AGRUPAMENTO_CHOICE = [
+    ('BERCARIO I', 'BERCARIO I'),
+    ('BERCARIO II', 'BERCARIO II'),
+    ('MINI GRUPO I', 'MINI GRUPO I'),
+    ('MINI GRUPO II', 'MINI GRUPO II'),
+    ('INFANTIL I', 'INFANTIL I'),
+    ('INFANTIL II', 'INFANTIL II'),
+    ('INFANTIL II', 'INFANTIL II'),
+    ('SEM AGRUPAMENTO', 'SEM AGRUPAMENTO')
+]
+
 
 class Solicitacao(models.Model):
     protocolo = models.CharField(max_length=50, unique=True, help_text="Protocolo automatico")
@@ -29,6 +40,7 @@ class Solicitacao(models.Model):
     dt_solicitacao = models.DateTimeField(auto_now_add=True)
     dt_modificacao = models.DateTimeField(auto_now=True)
     finalizado = models.BooleanField(default=False, help_text="FLAG que este processo de solicitacao está finalizado")
+    agrupamento = models.CharField(max_length=50, blank=True, choices=AGRUPAMENTO_CHOICE)
 
     class Meta:
         db_table = 'CI_solicitacao'
