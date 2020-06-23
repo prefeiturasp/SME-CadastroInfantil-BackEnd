@@ -11,11 +11,11 @@ export_novos_por_dre.short_description = 'Exportar novos registros por DRE'
 
 class SolicitacaoAdmin(admin.ModelAdmin):
     list_display = (
-        'get_nr_solicitacao', 'get_crianca_nome', 'nascimento_crianca', 'endereco_completo', 'cep_moradia', 'dre',
-        'distrito', 'exportado')
-    list_filter = ('exportado', 'dre')
+        'get_nr_solicitacao', 'get_crianca_nome', 'nascimento_crianca', 'endereco_completo', 'cep_moradia',
+        "get_email_responsavel", 'dre', 'distrito', 'exportado', "finalizado")
+    list_filter = ('exportado', "finalizado", 'dre')
     list_per_page = 25
-    list_editable = ('dre',)
+    list_editable = ('dre', "finalizado",)
     # list_display_links = None
     exclude = ('dados',)
     readonly_fields = ('crianca_dados',)
@@ -39,6 +39,14 @@ class SolicitacaoAdmin(admin.ModelAdmin):
         return obj.protocolo
 
     get_nr_solicitacao.short_description = 'Nro'
+
+    #######################################################
+
+    #######################################################
+    def get_email_responsavel(self, obj):
+        return obj.dados.email_responsavel
+
+    get_email_responsavel.short_description = 'EMAIL'
 
     #######################################################
 

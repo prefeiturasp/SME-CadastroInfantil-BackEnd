@@ -28,6 +28,7 @@ class Solicitacao(models.Model):
     distrito = models.CharField(max_length=50, blank=True, help_text="Seleciona o distrito dessa solicitacao")
     dt_solicitacao = models.DateTimeField(auto_now_add=True)
     dt_modificacao = models.DateTimeField(auto_now=True)
+    finalizado = models.BooleanField(default=False, help_text="FLAG que este processo de solicitacao está finalizado")
 
     class Meta:
         db_table = 'CI_solicitacao'
