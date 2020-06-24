@@ -44,7 +44,7 @@ class SolicitacaoAdmin(admin.ModelAdmin):
 
     #######################################################
     def get_email_responsavel(self, obj):
-        return obj.dados.email_responsavel
+        return str(obj.dados.email_responsavel).lower()
 
     get_email_responsavel.short_description = 'EMAIL'
 
