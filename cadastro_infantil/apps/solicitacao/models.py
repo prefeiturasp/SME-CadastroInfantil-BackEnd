@@ -72,6 +72,10 @@ class Solicitacao(models.Model):
         return ['dados__dt_nasc_crianca', 'dados__dt_entrada_brasil', 'dados__dt_nasc_responsavel', ]
 
     @staticmethod
+    def get_bool_cols():
+        return ['finalizado', ]
+
+    @staticmethod
     def get_colunas_planilha():
         cols = [f"dados__{f.name}" for f in DadosCrianca._meta.get_fields()] + [f.name for f in
                                                                                 Solicitacao._meta.get_fields()]

@@ -66,6 +66,9 @@ def escreve_solicitacoes_planilha(cols, solicitacoes, wbook, page_name=None):
             elif k in Solicitacao.get_datetime_cols():
                 v = v.astimezone().replace(tzinfo=None)
                 wsheet.write(wrow, col, v, date_time)
+            elif k in Solicitacao.get_bool_cols():
+                v = 'SIM' if v else 'NÃO'
+                wsheet.write(wrow, col, v)
             elif k == 'dados__certidao_crianca':
                 v = settings.MEDIA_URL + v
                 wsheet.write(wrow, col, v)
