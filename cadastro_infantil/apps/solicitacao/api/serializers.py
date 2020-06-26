@@ -4,6 +4,7 @@ from rest_framework import serializers
 from cadastro_infantil.apps.formulario.api.serializers import DadosCriancaCreateSerializer
 from cadastro_infantil.apps.solicitacao.models import Solicitacao
 from cadastro_infantil.apps.solicitacao.tasks import envia_confirmacao_cadastro
+from cadastro_infantil.utils.define_agrupamento import define_agrupamento
 from cadastro_infantil.utils.gerador_de_protocolo import gerador_de_protocolo
 from cadastro_infantil.utils.get_dre_distrito import get_dre_distrito
 
@@ -33,10 +34,13 @@ class SolicitacaoCreateSerializer(serializers.ModelSerializer):
         # Pegando DRE e DISTRITO da solicitacao
         validated_data['distrito'], validated_data['dre'] = get_dre_distrito(dados.cep_moradia)
 
+        # Gerando Agrupamento
+        validated_data['agrupamento'] = define_agrupamento(dados_data['dt_nasc_crianca'])
+
         # Criando e obtendo a solicitacao
         solicitacao = super().create(validated_data)
 
-        # email
+        # # email
         if solicitacao.protocolo and len(dados.email_responsavel) > 1:
             contexto = {
                 'para': dados.email_responsavel,

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.utils.timezone import now
 
 from cadastro_infantil.apps.solicitacao.models import Solicitacao, DRE_CHOICE
+from cadastro_infantil.utils.define_agrupamento import define_agrupamento
 
 
 def export_all(*_):
@@ -65,6 +66,9 @@ def escreve_solicitacoes_planilha(cols, solicitacoes, wbook, page_name=None):
             elif k in Solicitacao.get_datetime_cols():
                 v = v.astimezone().replace(tzinfo=None)
                 wsheet.write(wrow, col, v, date_time)
+            elif k in Solicitacao.get_bool_cols():
+                v = 'SIM' if v else 'NÃO'
+                wsheet.write(wrow, col, v)
             elif k == 'dados__certidao_crianca':
                 v = settings.MEDIA_URL + v
                 wsheet.write(wrow, col, v)
@@ -75,6 +79,9 @@ def escreve_solicitacoes_planilha(cols, solicitacoes, wbook, page_name=None):
                 raca = {"1": 'AMARELA', "2": 'BRANCA', "3": 'INDIGENA',
                         "4": 'PARDA', "5": 'PRETA', "6": "NAO DECLARADA"}
                 wsheet.write(wrow, col, raca.get(v, v))
+            elif k == 'agrupamento':
+                v = v if len(v) > 0 else define_agrupamento(s.get('dados__dt_nasc_crianca'))
+                wsheet.write(wrow, col, v)
             else:
                 wsheet.write(wrow, col, v)
             col += 1
