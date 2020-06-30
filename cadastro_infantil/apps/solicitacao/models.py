@@ -79,4 +79,7 @@ class Solicitacao(models.Model):
     def get_colunas_planilha():
         cols = [f"dados__{f.name}" for f in DadosCrianca._meta.get_fields()] + [f.name for f in
                                                                                 Solicitacao._meta.get_fields()]
-        return [col for col in cols if col not in ['id', 'dados__dados', 'dados__id', 'dados', 'exportado']]
+        cols = [col for col in cols if col not in ['id', 'dados__dados', 'dados__id', 'dados', 'exportado']]
+        # Alterando a ordem do agrupamento conforme solicitação
+        cols.insert(5, cols.pop(40))
+        return cols
