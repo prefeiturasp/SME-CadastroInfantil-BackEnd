@@ -160,29 +160,42 @@ Não se aplica.
 ## [](#instalacao-e-configuracao)Instalação e Configuração:
 
 ## Pré-requisitos
+-------------
+-   git	
+-   Docker
+-   Docker Compose
 
--   npm
--   git
-
-Instruções
+Build do projeto
 ---------------
 
-Após clonar o projeto, execute o comando para instalar as bibliotecas utilizadas:
+Para buildar as imagens do projeto, executar o comando abaixo
 
-    $ npm install
-  
-Configurando as variáveis de ambiente
----------------------------
-Crie um arquivo *.env* na raiz do projeto. Nele, utilize a variável **REACT_APP_API_URL** com o endereço do backend para realizar as requisições.
-
-    conf
-    public
-    node_modules
-    src
-    .env
+    $ docker-compose -f local.yml build
 
 Execução do projeto
 -------------
-Para rodar o projeto, basta:
+Abra um terminal na raiz do projeto e execute o seguinte para o desenvolvimento local:
 
-    $ npm start
+    $ docker-compose -f local.yml up
+
+Executar comandos de gerenciamento
+---------------------------
+
+Como acontece com qualquer comando shell que desejamos executar em nosso contêiner, isso é feito usando o comando `docker-compose -f local.yml run --rm`:
+
+    $ docker-compose -f local.yml run --rm django python manage.py migrate
+    $ docker-compose -f local.yml run --rm django python manage.py createsuperuser
+
+
+Configurando as váriaveis de ambiente
+---------------------------
+
+As pastas com as variaves estão dispostas da seguinte maneira: :
+
+    .envs
+    ├── .local
+    │   ├── .django
+    │   └── .postgres
+    └── .production
+        ├── .django
+        └── .postgres
