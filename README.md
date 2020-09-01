@@ -160,14 +160,8 @@ Não se aplica.
 ## [](#instalacao-e-configuracao)Instalação e Configuração:
 
 ## Pré-requisitos
-
--   npm
--   git
-
-# Backend
-## Pré-requisitos
 -------------
-
+-   git	
 -   Docker
 -   Docker Compose
 
