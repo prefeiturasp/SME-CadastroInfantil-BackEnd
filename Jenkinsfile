@@ -20,7 +20,7 @@ pipeline {
 
         stage('Analise codigo') {
             when {
-                branch 'homolog'
+                branch 'homolog-bypass'
             }
             steps {
                 sh 'sonar-scanner \
