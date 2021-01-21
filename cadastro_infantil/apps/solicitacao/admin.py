@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from rangefilter.filter import DateRangeFilter
 
 from cadastro_infantil.apps.solicitacao.models import Solicitacao
 from cadastro_infantil.utils.excel_utils import export_all, export_novos_por_dre
@@ -13,16 +14,22 @@ class SolicitacaoAdmin(admin.ModelAdmin):
     list_display = (
         'get_nr_solicitacao', 'get_crianca_nome', 'nascimento_crianca', 'endereco_completo',
         'cep_moradia', "get_email_responsavel", 'dre', 'distrito', 'exportado', "finalizado")
-    list_filter = ('exportado', "finalizado", 'dre')
+    list_filter = (('dt_solicitacao', DateRangeFilter), 'exportado', "finalizado", 'dre',)
     list_per_page = 25
     list_editable = ('dre', "finalizado")
     # list_display_links = None
     exclude = ('dados',)
     readonly_fields = ('crianca_dados',)
-    actions = [export_novos_por_dre, export_all, ]
     list_select_related = ['dados', ]
 
     search_fields = ("protocolo", "dados__nome_crianca")
+
+    def exporta_todos(self, request, queryset):
+        return export_all(queryset)
+
+    exporta_todos.short_description = 'Gerar lista com TODAS as solicitações'
+
+    actions = [export_novos_por_dre, exporta_todos, ]
 
     def crianca_dados(self, obj):
         change_url = reverse('admin:formulario_dadoscrianca_change', args=(obj.dados.id,))

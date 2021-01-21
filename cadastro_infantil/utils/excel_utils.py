@@ -7,15 +7,15 @@ from cadastro_infantil.apps.solicitacao.models import Solicitacao, DRE_CHOICE
 from cadastro_infantil.utils.define_agrupamento import define_agrupamento
 
 
-def export_all(*_):
-    return gerador_de_exportacao(fname='todos-cadastro_infantil', mode='all')
+def export_all(queryset):
+    return gerador_de_exportacao(fname='todos-cadastro_infantil', mode='all', queryset=queryset)
 
 
 def export_novos_por_dre(*_):
     return gerador_de_exportacao(fname='cadastro_infantil', mode='dre')
 
 
-def gerador_de_exportacao(fname, mode):
+def gerador_de_exportacao(fname, mode, queryset=None):
     time = now().astimezone().isoformat('T', 'minutes')[:-6]
     filename = f"{fname}_{time}.xlsx"
     response = HttpResponse(content_type='application/ms-excel')
@@ -24,7 +24,7 @@ def gerador_de_exportacao(fname, mode):
     wbook = xlsxwriter.Workbook(response, {'constant_memory': True})
     if mode == 'all':
         cols.append('exportado')
-        solicitacoes = Solicitacao.objects.select_related('dados').values(*cols).all().order_by('dados_id')
+        solicitacoes = queryset.select_related('dados').values(*cols).all().order_by('dados_id')
         escreve_solicitacoes_planilha(cols, solicitacoes, wbook)
         wbook.close()
         # Marca como exportado
