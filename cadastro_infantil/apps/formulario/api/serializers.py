@@ -15,7 +15,8 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DadosCrianca
-        fields = ('nome_crianca',
+        fields = ('cpf',
+                  'nome_crianca',
                   'sexo_crianca',
                   'nacionalidade_crianca',
                   'dt_entrada_brasil',
@@ -54,6 +55,15 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
     def validate_certidao_crianca(self, value):
         if not value:
             raise serializers.ValidationError("Certidão deve ser enviado")
+        return value
+
+    def validate_cpf(self, value):
+        if not value:
+            raise serializers.ValidationError("CPF é obrigatório")
+
+        if DadosCrianca.objects.filter(cpf=value).first():
+            raise serializers.ValidationError("CPF já cadastrado")
+
         return value
 
     def validate(self, attrs):
