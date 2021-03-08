@@ -61,9 +61,6 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
         if not value:
             raise serializers.ValidationError("CPF é obrigatório")
 
-        if DadosCrianca.objects.filter(cpf=value).first():
-            raise serializers.ValidationError("CPF já cadastrado")
-
         return value
 
     def validate(self, attrs):
@@ -72,4 +69,10 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
                 attrs[campo] = remover_acentos(str(attrs[campo]).upper())
             except KeyError as e:
                 attrs[campo] = ''
+        dado_crianca = DadosCrianca.objects.filter(cpf=attrs['cpf']).last()
+        if dado_crianca:
+            dado_crianca.atualizacao_cadastral = ''
+            dado_crianca.save()
+            attrs['atualizacao_cadastral'] = 'SIM'
+
         return attrs
