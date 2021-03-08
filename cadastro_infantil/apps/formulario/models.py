@@ -24,6 +24,7 @@ class DadosCrianca(models.Model):
     ]
     # Crianca
     cpf = models.CharField(max_length=11, help_text="CPF", blank=True, null=True)
+    atualizacao_cadastral = models.CharField(max_length=3, help_text='atualização Cadastral', blank=True, null=True)
     nome_crianca = models.CharField(max_length=255, help_text="Nome da criança")
     sexo_crianca = models.CharField(max_length=1, choices=SEXO, help_text="Sexo da criança (M/F)")
     nacionalidade_crianca = models.CharField(max_length=100, help_text="Nacionalidade da criança")
