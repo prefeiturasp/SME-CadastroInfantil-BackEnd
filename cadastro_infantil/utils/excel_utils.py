@@ -53,10 +53,12 @@ def escreve_solicitacoes_planilha(cols, solicitacoes, wbook, page_name=None):
     date_time = wbook.add_format({'num_format': 'dd/mm/yy hh:mm'})
     wsheet = wbook.add_worksheet(page_name)
     wrow = 0
+    cols[37] = 'solicitação'
     # Cabeçalho
     for i, col in enumerate(map(lambda x: str.replace(x, "dados__", ""), cols)):
         wsheet.write(wrow, i, col, bold)
     wrow += 1
+    cols[37] = 'protocolo'
     # Dados
     for s in solicitacoes:
         col = 0

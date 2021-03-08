@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 
 import environ
+from corsheaders.defaults import default_headers
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # cadastro_infantil/
@@ -319,8 +320,8 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '1/minute',
-        'user': '1/minute'
+        'anon': '100/minute',
+        'user': '100/minute'
     }
     # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
 }

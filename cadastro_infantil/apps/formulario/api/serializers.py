@@ -15,7 +15,8 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DadosCrianca
-        fields = ('nome_crianca',
+        fields = ('cpf',
+                  'nome_crianca',
                   'sexo_crianca',
                   'nacionalidade_crianca',
                   'dt_entrada_brasil',
@@ -56,10 +57,20 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Certidão deve ser enviado")
         return value
 
+    def validate_cpf(self, value):
+        if not value:
+            raise serializers.ValidationError("CPF é obrigatório")
+
+        return value
+
     def validate(self, attrs):
         for campo in DadosCrianca.CAMPOS_PRA_NORMALIZAR:
             try:
                 attrs[campo] = remover_acentos(str(attrs[campo]).upper())
             except KeyError as e:
                 attrs[campo] = ''
+        dado_crianca = DadosCrianca.objects.filter(cpf=attrs['cpf']).last()
+        if dado_crianca:
+            attrs['atualizacao_cadastral'] = 'SIM'
+
         return attrs

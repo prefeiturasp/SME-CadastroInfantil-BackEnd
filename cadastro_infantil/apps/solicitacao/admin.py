@@ -12,7 +12,7 @@ export_novos_por_dre.short_description = 'Exportar novos registros por DRE'
 
 class SolicitacaoAdmin(admin.ModelAdmin):
     list_display = (
-        'get_nr_solicitacao', 'get_crianca_nome', 'nascimento_crianca', 'endereco_completo',
+        'get_nr_solicitacao', 'get_cpf', 'get_crianca_nome', 'nascimento_crianca', 'endereco_completo',
         'cep_moradia', "get_email_responsavel", 'dre', 'distrito', 'exportado', "finalizado")
     list_filter = (('dt_solicitacao', DateRangeFilter), 'exportado', "finalizado", 'dre',)
     list_per_page = 25
@@ -48,6 +48,10 @@ class SolicitacaoAdmin(admin.ModelAdmin):
     get_nr_solicitacao.short_description = 'Nro'
 
     #######################################################
+    def get_cpf(self, obj):
+        return obj.dados.cpf if obj.dados.cpf else ""
+    
+    get_cpf.short_description = 'CPF'
 
     #######################################################
     def get_email_responsavel(self, obj):
