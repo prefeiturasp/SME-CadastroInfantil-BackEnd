@@ -71,8 +71,6 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
                 attrs[campo] = ''
         dado_crianca = DadosCrianca.objects.filter(cpf=attrs['cpf']).last()
         if dado_crianca:
-            dado_crianca.atualizacao_cadastral = ''
-            dado_crianca.save()
             attrs['atualizacao_cadastral'] = 'SIM'
 
         return attrs
