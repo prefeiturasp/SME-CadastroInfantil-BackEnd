@@ -64,12 +64,16 @@ pipeline {
                         withCredentials([file(credentialsId: "${kubeconfig}", variable: 'config')]){
                             sh('cp $config '+"$home"+'/.kube/config')
                             sh 'kubectl rollout restart deployment/cadastro-infantil-backend -n sme-cadastro-infantil'
+                            sh 'kubectl rollout restart deployment/cadastro-infantil-celery -n sme-cadastro-infantil'
+                            sh 'kubectl rollout restart deployment/cadastro-infantil-flower -n sme-cadastro-infantil'
                             sh('rm -f '+"$home"+'/.kube/config')
                         }
                     }
                     withCredentials([file(credentialsId: "${kubeconfig}", variable: 'config')]){
                             sh('cp $config '+"$home"+'/.kube/config')
                             sh 'kubectl rollout restart deployment/cadastro-infantil-backend -n sme-cadastro-infantil'
+                            sh 'kubectl rollout restart deployment/cadastro-infantil-celery -n sme-cadastro-infantil'
+                            sh 'kubectl rollout restart deployment/cadastro-infantil-flower -n sme-cadastro-infantil'
                             sh('rm -f '+"$home"+'/.kube/config')
                     }
                 }
