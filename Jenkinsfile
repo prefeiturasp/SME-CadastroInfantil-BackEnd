@@ -26,7 +26,7 @@ pipeline {
           steps {
               withSonarQubeEnv('sonarqube-local'){
                 sh 'echo "[ INFO ] Iniciando analise Sonar..." && sonar-scanner \
-                -Dsonar.projectKey=SME-CadastroInfantil-FrontEnd \
+                -Dsonar.projectKey=SME-CadastroInfantil-BackEnd \
                 -Dsonar.sources=.'
             }
           }
