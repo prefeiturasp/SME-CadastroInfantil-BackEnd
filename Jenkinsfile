@@ -107,4 +107,8 @@ def getKubeconf(branchName) {
     else if ("release".equals(branchName)) { return "config_hom"; }
     else if ("develop".equals(branchName)) { return "config_dev"; }
     else if ("development".equals(branchName)) { return "config_dev"; }  
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d7fac8dafed42ef79378d335956b3b116b71df94
