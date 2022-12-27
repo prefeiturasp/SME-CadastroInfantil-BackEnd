@@ -117,7 +117,7 @@ class InativacaoFormulario(models.Model):
     def situacao_site(cls):
         hoje = date.today()
         inativacao = cls.objects.last()
-        if inativacao and (hoje >= inativacao.data_inicio) and (hoje <= inativacao.data_inicio):
+        if inativacao and (hoje >= inativacao.data_inicio) and (hoje <= inativacao.data_fim):
             result={
                 "site_ativo": False,
                 "data_inicio": inativacao.data_inicio,
