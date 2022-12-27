@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from cadastro_infantil.apps.formulario.models import DadosCrianca
+from cadastro_infantil.apps.formulario.models import DadosCrianca, InativacaoFormulario
+from cadastro_infantil.apps.formulario.forms import InativacaoForm
 
 
 #
@@ -18,6 +19,18 @@ class DadosCriancaAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         pass
+
+
+@admin.register(InativacaoFormulario)
+class InativacaoFormularioAdmin(admin.ModelAdmin):
+
+    def has_add_permission(self, request, obj=None):
+        return not InativacaoFormulario.objects.exists()
+
+    list_display = ('id', 'data_inicio', 'data_fim', 'alterado_em')
+    readyonly_field = ('alterado_em',)
+    fields = ('data_inicio', 'data_fim', 'texto_a_ser_visualizado')
+    form = InativacaoForm
 
 
 admin.site.register(DadosCrianca, DadosCriancaAdmin)
