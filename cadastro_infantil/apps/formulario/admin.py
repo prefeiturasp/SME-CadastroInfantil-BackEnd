@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from cadastro_infantil.apps.formulario.models import DadosCrianca, InativacaoFormulario
+from cadastro_infantil.apps.formulario.forms import InativacaoForm
 
 
 #
@@ -29,6 +30,7 @@ class InativacaoFormularioAdmin(admin.ModelAdmin):
     list_display = ('id', 'data_inicio', 'data_fim', 'alterado_em')
     readyonly_field = ('alterado_em',)
     fields = ('data_inicio', 'data_fim', 'texto_a_ser_visualizado')
+    form = InativacaoForm
 
 
 admin.site.register(DadosCrianca, DadosCriancaAdmin)
