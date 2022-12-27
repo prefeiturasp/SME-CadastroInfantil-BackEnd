@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 
 from cadastro_infantil.utils.image_compressor import compress
@@ -104,3 +105,36 @@ class DadosCrianca(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.nome_crianca}"
+
+
+class InativacaoFormulario(models.Model):
+    data_inicio = models.DateField(help_text="Data de inicio da inativação")
+    data_fim = models.DateField(help_text="Data de encerramento da inativação")
+    texto_a_ser_visualizado = models.TextField(help_text='Texto a ser exibido na inativação do site')
+    alterado_em = models.DateTimeField("Alterado em", editable=False, auto_now=True)
+
+    @classmethod
+    def situacao_site(cls):
+        hoje = date.today()
+        inativacao = cls.objects.last()
+        if inativacao and (hoje >= inativacao.data_inicio) and (hoje <= inativacao.data_inicio):
+            result={
+                "site_ativo": False,
+                "data_inicio": inativacao.data_inicio,
+                "data_fim": inativacao.data_fim,
+                "mensagem": inativacao.texto_a_ser_visualizado
+
+            }
+        else:
+            result={
+                "site_ativo": True,
+            }
+
+        return result
+
+    class Meta:
+        verbose_name = 'Inativação do Formulário'
+        verbose_name_plural = 'Inativações de formulários'
+
+    def __str__(self):
+        return f"Inativação de {self.data_inicio} a {self.data_fim}"
