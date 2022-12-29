@@ -21,5 +21,5 @@ class ConsultaCpf(views.APIView):
 
 class GetSituacaoSite(views.APIView):
     def get(self, request):
-        return Response(InativacaoFormulario.situacao_site(), status=status.HTTP_200_OK)
+        return Response(InativacaoFormulario.situacao_site_to_json(), status=status.HTTP_200_OK)
 
