@@ -114,7 +114,7 @@ class InativacaoFormulario(models.Model):
     alterado_em = models.DateTimeField("Alterado em", editable=False, auto_now=True)
 
     @classmethod
-    def situacao_site(cls):
+    def situacao_site_to_json(cls):
         hoje = date.today()
         inativacao = cls.objects.last()
         if inativacao and (hoje >= inativacao.data_inicio) and (hoje <= inativacao.data_fim):
@@ -131,6 +131,14 @@ class InativacaoFormulario(models.Model):
             }
 
         return result
+
+    @classmethod
+    def site_ativo(cls):
+        hoje = date.today()
+        inativacao = cls.objects.last()
+        if inativacao and (hoje >= inativacao.data_inicio) and (hoje <= inativacao.data_fim):
+            return False
+        return True
 
     class Meta:
         verbose_name = 'Inativação do Formulário'
