@@ -334,3 +334,4 @@ media/
 !.envs/.production_example/
 
 .idea/
+*.idea
