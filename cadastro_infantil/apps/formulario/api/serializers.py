@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from drf_extra_fields.fields import HybridImageField
 
-from cadastro_infantil.apps.formulario.models import DadosCrianca
+from cadastro_infantil.apps.formulario.models import DadosCrianca, InativacaoFormulario
 from cadastro_infantil.utils.remove_acentos import remover_acentos
 
 
@@ -64,6 +64,10 @@ class DadosCriancaCreateSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, attrs):
+        ativo = InativacaoFormulario.site_ativo()
+        if not ativo:
+            raise serializers.ValidationError("Formulário inativo para cadastro no momento")
+
         for campo in DadosCrianca.CAMPOS_PRA_NORMALIZAR:
             try:
                 attrs[campo] = remover_acentos(str(attrs[campo]).upper())
