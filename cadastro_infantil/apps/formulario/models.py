@@ -108,8 +108,8 @@ class DadosCrianca(models.Model):
 
 
 class InativacaoFormulario(models.Model):
-    data_inicio = models.DateField(help_text="Data de inicio da inativação")
-    data_fim = models.DateField(help_text="Data de encerramento da inativação")
+    data_inicio = models.DateField(verbose_name="Data Inativação DE", help_text="Data de inicio da inativação")
+    data_fim = models.DateField(verbose_name="Data Inativação ATÉ", help_text="Último dia de inativação")
     texto_a_ser_visualizado = models.TextField(help_text='Texto a ser exibido na inativação do site')
     alterado_em = models.DateTimeField("Alterado em", editable=False, auto_now=True)
 
