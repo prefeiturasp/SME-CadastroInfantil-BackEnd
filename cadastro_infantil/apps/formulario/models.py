@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 
 from cadastro_infantil.utils.image_compressor import compress
@@ -104,3 +105,44 @@ class DadosCrianca(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.nome_crianca}"
+
+
+class InativacaoFormulario(models.Model):
+    data_inicio = models.DateField(verbose_name="Data Inativação DE", help_text="Data de inicio da inativação")
+    data_fim = models.DateField(verbose_name="Data Inativação ATÉ", help_text="Último dia de inativação")
+    texto_a_ser_visualizado = models.TextField(help_text='Texto a ser exibido na inativação do site')
+    alterado_em = models.DateTimeField("Alterado em", editable=False, auto_now=True)
+
+    @classmethod
+    def situacao_site_to_json(cls):
+        hoje = date.today()
+        inativacao = cls.objects.last()
+        if inativacao and (hoje >= inativacao.data_inicio) and (hoje <= inativacao.data_fim):
+            result={
+                "site_ativo": False,
+                "data_inicio": inativacao.data_inicio,
+                "data_fim": inativacao.data_fim,
+                "mensagem": inativacao.texto_a_ser_visualizado
+
+            }
+        else:
+            result={
+                "site_ativo": True,
+            }
+
+        return result
+
+    @classmethod
+    def site_ativo(cls):
+        hoje = date.today()
+        inativacao = cls.objects.last()
+        if inativacao and (hoje >= inativacao.data_inicio) and (hoje <= inativacao.data_fim):
+            return False
+        return True
+
+    class Meta:
+        verbose_name = 'Inativação do Formulário'
+        verbose_name_plural = 'Inativações de formulários'
+
+    def __str__(self):
+        return f"Inativação de {self.data_inicio} a {self.data_fim}"
