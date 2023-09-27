@@ -25,7 +25,7 @@ pipeline {
         }
 
         stage('AnaliseCodigo') {
-	      when { branch 'homolog' }
+	      when { branch 'testecadinfant' }
           steps {
               withSonarQubeEnv('sonarqube-local'){
                 sh 'echo "[ INFO ] Iniciando analise Sonar..." && sonar-scanner \
@@ -36,7 +36,7 @@ pipeline {
         }
 
         stage('Build') {
-          when { anyOf { branch 'master'; branch 'main'; branch "story/*"; branch 'development'; branch 'develop'; branch 'release'; branch 'homolog';  } } 
+          when { anyOf { branch 'master'; branch 'main'; branch "story/*"; branch 'development'; branch 'develop'; branch 'release'; branch 'testecadinfant';  } } 
           steps {
             script {
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/cadastro-infantil-backend"
@@ -50,7 +50,7 @@ pipeline {
         }
 	    
         stage('Deploy'){
-            when { anyOf {  branch 'master'; branch 'main'; branch 'development'; branch 'develop'; branch 'release'; branch 'homolog';  } }        
+            when { anyOf {  branch 'master'; branch 'main'; branch 'development'; branch 'develop'; branch 'release'; branch 'testecadinfant';  } }        
             steps {
                 script{
                     if ( env.branchname == 'main' ||  env.branchname == 'master' ) {
@@ -104,11 +104,11 @@ def sendTelegram(message) {
     }
 }
 def getKubeconf(branchName) {
-    if("main".equals(branchName)) { return "config_prd"; }
-    else if ("master".equals(branchName)) { return "config_prd"; }
-    else if ("homolog".equals(branchName)) { return "config_release"; }
-    else if ("release".equals(branchName)) { return "config_release"; }
-    else if ("develop".equals(branchName)) { return "config_release"; }
-    else if ("development".equals(branchName)) { return "config_release"; }  
+    if("main".equals(branchName)) { return "config_prd_"; }
+    else if ("master".equals(branchName)) { return "config_prd_"; }
+    else if ("homolog".equals(branchName)) { return "config_release_"; }
+    else if ("release".equals(branchName)) { return "config_release_"; }
+    else if ("develop".equals(branchName)) { return "config_release_"; }
+    else if ("development".equals(branchName)) { return "config_release_"; }  
 }
 
