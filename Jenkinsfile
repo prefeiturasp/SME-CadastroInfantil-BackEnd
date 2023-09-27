@@ -7,7 +7,7 @@ pipeline {
     }
   
     agent { kubernetes { 
-                  label 'pyton36'
+                  label 'python36'
                   defaultContainer 'python36'
                 }
               } 
