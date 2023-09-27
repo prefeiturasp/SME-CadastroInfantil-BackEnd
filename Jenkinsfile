@@ -6,9 +6,11 @@ pipeline {
       namespace = "${env.branchname == 'develop' ? 'cadastroinfantil-dev' : env.branchname == 'homolog' ? 'cadastroinfantil-hom' : env.branchname == 'homolog-r2' ? 'cadastroinfantil-hom2' : 'sme-cadastro-infantil' }"
     }
   
-    agent {
-      node { label 'python-36-cadastro' }
-    }
+    agent { kubernetes { 
+                  label 'pyton36'
+                  defaultContainer 'python36'
+                }
+              } 
 
     options {
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
