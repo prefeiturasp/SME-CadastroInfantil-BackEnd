@@ -26,6 +26,11 @@ pipeline {
 
         stage('AnaliseCodigo') {
 	      when { branch 'testecadinfant' }
+              agent { kubernetes { 
+                  label 'python36'
+                  defaultContainer 'builder'
+                }
+              } 
           steps {
               withSonarQubeEnv('sonarqube-local'){
                 sh 'echo "[ INFO ] Iniciando analise Sonar..." && sonar-scanner \
