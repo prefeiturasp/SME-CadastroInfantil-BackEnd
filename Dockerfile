@@ -18,11 +18,11 @@ RUN addgroup --system django \
 # Define diretório de trabalho antes (melhora cache)
 WORKDIR /app
 
-# Copia apenas requirements primeiro (cache de dependência)
-COPY requirements/production.txt /tmp/requirements.txt
+# Copia apenas requirements
+COPY requirements /tmp/requirements
 
-RUN pip install -r /tmp/requirements.txt \
- && rm -rf /tmp/requirements.txt
+RUN pip install -r /tmp/requirements/production.txt \
+ && rm -rf /tmp/requirements
 
 # Copia scripts e já ajusta permissões em uma camada só
 COPY ./compose/production/django/entrypoint /entrypoint
